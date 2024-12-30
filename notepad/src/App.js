@@ -16,37 +16,34 @@ const App = () => {
   const [editorHover, setEditorHover] = useState(false);
   const [buttonHover, setButtonHover] = useState(false);
 
-  // Clear localStorage and start with an empty editor state on app start
+ 
   useEffect(() => {
-    localStorage.removeItem("editorContent"); // Clear saved content
-    setEditorState(EditorState.createEmpty()); // Optionally reset editor state
+    localStorage.removeItem("editorContent"); 
+    setEditorState(EditorState.createEmpty()); 
   }, []);
 
-  // Save editor content to localStorage
   const saveContent = () => {
     const contentState = editorState.getCurrentContent();
     
-    // Log content state for debugging
+   
     console.log("Editor content state:", contentState);
     
     if (contentState.hasText()) {
       try {
-        // Convert content state to raw format
+     
         const rawContent = convertToRaw(contentState);
         console.log("Converted raw content:", rawContent);
   
-        // Attempt to save content to localStorage
         localStorage.setItem("editorContent", JSON.stringify(rawContent));
   
         alert("Content saved successfully!");
         console.log("Content saved to localStorage!");
   
-        // Optionally reset editor state after saving
+        
         setEditorState(EditorState.createEmpty());
       } catch (error) {
         console.error("Error saving content:", error);
         
-        // Check if it's a storage quota error
         if (error.name === 'QuotaExceededError') {
           alert("LocalStorage quota exceeded! Try clearing storage.");
         } else {
@@ -59,7 +56,6 @@ const App = () => {
   };
   
 
-  // Handle special formatting logic
   const handleBeforeInput = (chars) => {
     const contentState = editorState.getCurrentContent();
     const selectionState = editorState.getSelection();
@@ -69,19 +65,19 @@ const App = () => {
 
     if (chars === " " && cursorOffset === blockText.length) {
       if (blockText.startsWith("***")) {
-        applyInlineStyle("UNDERLINE", blockText.slice(3).trim()); // Apply underline
+        applyInlineStyle("UNDERLINE", blockText.slice(3).trim()); 
         return "handled";
       }
       if (blockText.startsWith("**")) {
-        applyInlineStyle("RED", blockText.slice(2).trim()); // Apply red color
+        applyInlineStyle("RED", blockText.slice(2).trim()); 
         return "handled";
       }
       if (blockText.startsWith("*")) {
-        applyInlineStyle("BOLD", blockText.slice(1).trim()); // Apply bold
+        applyInlineStyle("BOLD", blockText.slice(1).trim()); 
         return "handled";
       }
       if (blockText.startsWith("#")) {
-        applyBlockStyle("header-one", blockText.slice(1).trim()); // Apply header
+        applyBlockStyle("header-one", blockText.slice(1).trim()); 
         return "handled";
       }
     }
@@ -147,9 +143,9 @@ const App = () => {
       margin: 0,
       padding: 0,
       backgroundImage: "url('https://img.freepik.com/premium-photo/flowers-pink-background_935395-181718.jpg')", // Set your image URL here
-      backgroundSize: "cover", // Makes sure the image covers the entire page
-      backgroundPosition: "center", // Centers the background image
-      height: "100vh", // Ensures it covers the full viewport height
+      backgroundSize: "cover", 
+      backgroundPosition: "center", 
+      height: "100vh", 
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -161,7 +157,7 @@ const App = () => {
       margin: "auto",
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       color: "#333",
-      background: "linear-gradient(135deg, #e0f7fa, #fce4ec)", // Semi-transparent background to show image
+      background: "linear-gradient(135deg, #e0f7fa, #fce4ec)", 
       borderRadius: "10px",
       boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
       marginTop: "120px",
@@ -181,7 +177,7 @@ const App = () => {
       width:"700px",
       minHeight: "200px",
       boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-      backgroundColor: "#f4f7fc", // Set a background color for the editor
+      backgroundColor: "#f4f7fc", 
       transition: "box-shadow 0.3s ease",
     },
     editorWrapperHover: {
